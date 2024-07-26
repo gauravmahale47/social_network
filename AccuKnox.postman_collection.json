@@ -1,0 +1,266 @@
+{
+	"info": {
+		"_postman_id": "35d10997-ec76-4431-af56-4df327532cf4",
+		"name": "AccuKnox",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22522409"
+	},
+	"item": [
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Sign Up",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"gauravm@marchtee.com\",\n    \"password\": \"testing@47\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_path}}/users/signup/",
+							"host": [
+								"{{api_path}}"
+							],
+							"path": [
+								"users",
+								"signup",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Log In",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const responseBody = pm.response.json();",
+									"    const access = responseBody.data.access;",
+									"    const refresh = responseBody.data.refresh;",
+									"    pm.environment.set('token', access);",
+									"    pm.environment.set('refreshToken', refresh);",
+									"    console.log('Saved Token:', access);",
+									"} else {",
+									"    console.error('API did not return a 200 status code. Unable to save data.');",
+									"}",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"gauravm@marchtee.com\",\n    \"password\": \"testing@47\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_path}}/users/login/",
+							"host": [
+								"{{api_path}}"
+							],
+							"path": [
+								"users",
+								"login",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_path}}/users/search?q=gau",
+							"host": [
+								"{{api_path}}"
+							],
+							"path": [
+								"users",
+								"search"
+							],
+							"query": [
+								{
+									"key": "q",
+									"value": "gau"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Friends",
+			"item": [
+				{
+					"name": "Send Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"dhanesh@marchtee.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_path}}/friends/send-request/",
+							"host": [
+								"{{api_path}}"
+							],
+							"path": [
+								"friends",
+								"send-request",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Pending Request",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_path}}/friends/pending-requests/",
+							"host": [
+								"{{api_path}}"
+							],
+							"path": [
+								"friends",
+								"pending-requests",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Request Action",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"action\": \"accept\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{api_path}}/friends/request-action/1/",
+							"host": [
+								"{{api_path}}"
+							],
+							"path": [
+								"friends",
+								"request-action",
+								"1",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Friends List",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{api_path}}/friends/",
+							"host": [
+								"{{api_path}}"
+							],
+							"path": [
+								"friends",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
